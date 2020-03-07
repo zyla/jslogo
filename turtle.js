@@ -159,6 +159,29 @@
         ctx.closePath();
         ctx.stroke();
 
+        ctx.strokeStyle = 'red';
+
+        ctx.beginPath();
+
+        points = [
+
+          [6, -10],
+          [9, -13], // Arm
+          [13, -12],
+          [18, -4],
+          [18, 0],
+          [14, -1],
+          [10, -7],
+
+        ];
+
+        points.map(invert).forEach(function(pair, index) {
+            ctx[index ? 'lineTo' : 'moveTo'](pair[0], pair[1]);
+          });
+
+        ctx.closePath();
+        ctx.stroke();
+
         ctx.restore();
       }
     }},
