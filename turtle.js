@@ -379,7 +379,7 @@
       const startTime = performance.now();
 
       // Speed, in units/millisecond
-      const SPEED = 0.5;
+      const SPEED = 0.25;
 
       const start_x = this.x, start_y = this.y;
 
