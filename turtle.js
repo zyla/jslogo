@@ -333,8 +333,78 @@
       }
     }},
 
+    animateMove: {value: async function(signedDistance) {
+      var x, y, point, saved_x, saved_y, EPSILON = 1e-3;
+
+      const distance = Math.abs(signedDistance), sign = Math.sign(signedDistance);
+
+      point = Math.abs(distance) < EPSILON;
+
+      if (point) {
+        saved_x = this.x;
+        saved_y = this.y;
+        distance = EPSILON;
+      }
+
+      // Mostly for tests: limit precision
+      var PRECISION = 10;
+      function precision(n) {
+        var f = Math.pow(10, PRECISION);
+        return Math.round(n * f) / f;
+      }
+
+      const startTime = performance.now();
+
+      // Speed, in units/millisecond
+      const SPEED = 0.5;
+
+      const start_x = this.x, start_y = this.y;
+
+      while(true) {
+        const d = Math.min(distance, (performance.now() - startTime) * SPEED);
+
+        x = precision(start_x + d * sign * Math.cos(this.r));
+        y = precision(start_y + d * sign * Math.sin(this.r));
+        this._moveto(x, y);
+
+        if(d >= distance) {
+          break;
+        }
+
+        await new Promise(resolve => requestAnimationFrame(resolve));
+      }
+
+      if (point) {
+        this.x = this.px = saved_x;
+        this.y = this.px = saved_y;
+      }
+    }},
+
     turn: {value: function(angle) {
       this.r -= deg2rad(angle);
+    }},
+
+    animateTurn: {value: async function(signedAngle) {
+      const angle = Math.abs(signedAngle), sign = Math.sign(signedAngle);
+
+      // Speed, in radians/millisecond
+      const SPEED = 2 * Math.PI / 1000;
+      const distance = deg2rad(angle);
+      const start_r = this.r;
+
+      const startTime = performance.now();
+
+      while(true) {
+        const d = Math.min(distance, (performance.now() - startTime) * SPEED);
+
+        this.r = start_r - d * sign;
+
+        if(d >= distance) {
+          break;
+        }
+
+        await new Promise(resolve => requestAnimationFrame(resolve));
+      }
     }},
 
     towards: {value: function(x, y) {
