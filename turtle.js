@@ -394,7 +394,7 @@
         y = precision(this.y + d * sign * Math.sin(this.r));
         this._moveto(x, y);
 
-        if(d >= distance) {
+        if(travelled >= distance) {
           break;
         }
 
