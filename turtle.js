@@ -376,18 +376,22 @@
         return Math.round(n * f) / f;
       }
 
-      const startTime = performance.now();
 
       // Speed, in units/millisecond
       const SPEED = 0.25;
 
       const start_x = this.x, start_y = this.y;
+      let previousFrameTime = performance.now();
+      let travelled = 0;
 
       while(true) {
-        const d = Math.min(distance, (performance.now() - startTime) * SPEED);
+        const now = performance.now();
+        const d = Math.min(distance - travelled, (now - previousFrameTime) * SPEED);
+        travelled += d;
+        previousFrameTime = now;
 
-        x = precision(start_x + d * sign * Math.cos(this.r));
-        y = precision(start_y + d * sign * Math.sin(this.r));
+        x = precision(this.x + d * sign * Math.cos(this.r));
+        y = precision(this.y + d * sign * Math.sin(this.r));
         this._moveto(x, y);
 
         if(d >= distance) {
