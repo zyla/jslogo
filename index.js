@@ -220,6 +220,7 @@ function initInput() {
     setTimeout(function() {
       document.body.classList.add('running');
       logo.run(v).catch(function (e) {
+        console.error(e);
         error.innerHTML = '';
         error.appendChild(document.createTextNode(e.message));
         error.classList.add('shown');

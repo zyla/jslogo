@@ -357,17 +357,13 @@
     }},
 
     animateMove: {value: async function(signedDistance) {
-      var x, y, point, saved_x, saved_y, EPSILON = 1e-3;
+      var x, y, EPSILON = 1e-3;
+
+      if(Math.abs(signedDistance) < EPSILON) {
+        return this.move(signedDistance);
+      }
 
       const distance = Math.abs(signedDistance), sign = Math.sign(signedDistance);
-
-      point = Math.abs(distance) < EPSILON;
-
-      if (point) {
-        saved_x = this.x;
-        saved_y = this.y;
-        distance = EPSILON;
-      }
 
       // Mostly for tests: limit precision
       var PRECISION = 10;
@@ -399,11 +395,6 @@
         }
 
         await new Promise(resolve => requestAnimationFrame(resolve));
-      }
-
-      if (point) {
-        this.x = this.px = saved_x;
-        this.y = this.px = saved_y;
       }
     }},
 
