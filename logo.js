@@ -2307,7 +2307,7 @@ function LogoInterpreter(turtle, stream, savehook)
     return color;
   }
 
-  def(["setpencolor", "setpc", "setcolor"], function(color) {
+  def(["setpencolor", "setpc", "setcolor", "spc"], function(color) {
     turtle.color = parseColor(color);
   });
 
