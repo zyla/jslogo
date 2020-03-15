@@ -52,7 +52,7 @@
 
     this.color = '#000000';
     this.bgcolor = '#ffffff';
-    this.penwidth = 1;
+    this.penwidth = 3;
     this.penmode = 'paint';
     this.fontsize = 14;
     this.fontname = 'sans-serif';
@@ -110,7 +110,7 @@
 
       requestAnimationFrame(this._tick.bind(this));
       var cur = JSON.stringify([this.x, this.y, this.r, this.visible,
-                                this.sx, this.sy, this.width, this.height]);
+                                this.sx, this.sy, this.width, this.height, this.penwidth, this.color]);
       if (cur === this._last_state) return;
       this._last_state = cur;
 
@@ -181,6 +181,12 @@
 
         ctx.closePath();
         ctx.stroke();
+
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(0, 0, this.penwidth / 2, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();
 
         ctx.restore();
       }
