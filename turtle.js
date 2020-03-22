@@ -110,7 +110,7 @@
 
       requestAnimationFrame(this._tick.bind(this));
       var cur = JSON.stringify([this.x, this.y, this.r, this.visible,
-                                this.sx, this.sy, this.width, this.height, this.penwidth, this.color]);
+                                this.sx, this.sy, this.width, this.height, this.penwidth, this.color, this.pendown]);
       if (cur === this._last_state) return;
       this._last_state = cur;
 
@@ -182,11 +182,13 @@
         ctx.closePath();
         ctx.stroke();
 
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(0, 0, this.penwidth / 2, 0, 2 * Math.PI);
-        ctx.closePath();
-        ctx.fill();
+        if (this.pendown) {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(0, 0, this.penwidth / 2, 0, 2 * Math.PI);
+          ctx.closePath();
+          ctx.fill();
+        }
 
         ctx.restore();
       }
