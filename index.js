@@ -702,7 +702,7 @@ window.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    var lang = queryParams.lang || navigator.language || navigator.userLanguage;
+    var lang = 'en'; queryParams.lang || navigator.language || navigator.userLanguage;
     if (!lang) return Promise.resolve();
 
     // TODO: Support locale/fallback
