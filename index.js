@@ -399,7 +399,6 @@ function initInput() {
 // Canvas resizing
 //
 (function() {
-//  window.addEventListener('resize', resize);
   window.addEventListener('DOMContentLoaded', resize);
   function resize() {
     var box = $('#display-panel .inner'), rect = box.getBoundingClientRect(),
@@ -411,6 +410,17 @@ function initInput() {
     if (logo && turtle) {
       turtle.resize(w, h);
       logo.run('cs');
+    }
+  }
+
+  window.addEventListener('resize', centerCanvas);
+
+  function centerCanvas() {
+    var box = $('#display-panel .inner'), rect = box.getBoundingClientRect(),
+        w = rect.width, h = rect.height;
+    for(const elem of [$('#sandbox'), $('#turtle'), $('#overlay')]) {
+      elem.style.marginTop = (h - elem.height) / 2 + 'px';
+      elem.style.marginLeft = (w - elem.width) / 2 + 'px';
     }
   }
 }());
