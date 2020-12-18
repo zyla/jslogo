@@ -399,7 +399,7 @@ function initInput() {
 // Canvas resizing
 //
 (function() {
-  window.addEventListener('resize', resize);
+//  window.addEventListener('resize', resize);
   window.addEventListener('DOMContentLoaded', resize);
   function resize() {
     var box = $('#display-panel .inner'), rect = box.getBoundingClientRect(),
